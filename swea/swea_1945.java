@@ -1,31 +1,40 @@
 package swea;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class swea_1945 {
 	public static void main(String[] args) throws Exception {
-		int[] answer = new int[100];
+		int[] N = {2, 3, 5, 7, 11};
+		int[] answer = null;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		int T = Integer.parseInt(br.readLine());
-		int m = 2;
-		int count = 0;
-		int idx = 0;
-		
-//		for(int i = 0; i < T; i++) {
+				
+		for(int i = 1; i <= T; i++) {
+			answer = new int[5];
+			int idx = 0;
+			int count = 0;
 			int n = Integer.parseInt(br.readLine());
+			sb.append("#").append(i);
+			
 			while(n != 1) {
-				if(n % m == 0) {
-					n /= m;
+				if(n % N[idx] == 0) {
+					n /= N[idx];
 					count++;
 				} else {
-					m++;
 					answer[idx] = count;
+					
 					count = 0;
 					idx++;
 				}
 			}
-//		}
-		System.out.println(Arrays.toString(answer));
+			answer[idx] = count;
+			for(int j = 0; j < answer.length; j++) {
+				sb.append(" ").append(answer[j]);
+			}
+			sb.append("\n");
+		}
+		System.out.println(sb);
 	}
 }
