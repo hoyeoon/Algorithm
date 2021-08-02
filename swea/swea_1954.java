@@ -8,32 +8,27 @@ public class swea_1954 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
-
 		int[][] map = new int[n][n];
-		int totalSize = n * n;
+		char[] direction = {'r', 'd', 'l', 'u'};
 		int r = 0;
 		int c = 0;
-		int count = 1;
-		int[] direction = {0, 1, 2, 3}; // 0이면 열 + 이동, 1이면 행 + 이동, 2이면 열 - 이동, 3이면 행 - 이동
 		int idx = 0;
+		int answer = 0;
 		
-		while(totalSize-- > 0) {
-			map[r][c]++;
-			
-//			if(r == n - 1 ||  c == n - 1 || map[r+1][c] != 0 || map[r][c+1] != 0)
-//				idx++;
-			if(map[r][c] == 0)
+		while(answer++ < n) {
+			if(r > n - 1 || c > n - 1 || r < 0 || c < 0){
 				idx++;
-			
-			if(direction[idx % 4] == 0) c++;
-			if(direction[idx % 4] == 1)	r++;
-			if(direction[idx % 4] == 2) c--;
-			if(direction[idx % 4] == 3) r--;
-			
-			System.out.println(idx);
+			}
+			map[r][c] = answer;
+			if(direction[idx % 4] == 'r') c++;
+			if(direction[idx % 4] == 'd') r++;
+			if(direction[idx % 4] == 'l') c--;
+			if(direction[idx % 4] == 'u') r--;
 		}
 		
 		System.out.println(Arrays.deepToString(map));
+		
+		
 	}
 	
 }
