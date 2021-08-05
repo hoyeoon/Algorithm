@@ -12,6 +12,7 @@ public class Baekjoon_17299 {
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		int size = Integer.parseInt(br.readLine());	// 수열의 크기
 		arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 		ngf = new int[size];
@@ -21,24 +22,20 @@ public class Baekjoon_17299 {
 		}
 		
 		Stack<Integer> stack = new Stack<>();
-		stack.push(0);
-		for(int i = 1; i < size; i++) {
-			if(stack.isEmpty()) { 
-				stack.push(i);
-			}
+		
+		for(int i = 0; i < size; i++) {
 			while(!stack.isEmpty() && count[arr[i]] > count[arr[stack.peek()]]) {
 				ngf[stack.pop()] = arr[i];
-				System.out.println(i);
 			}
 			stack.push(i);
 		}
-		
-		System.out.println(Arrays.toString(ngf));
-			
-		while (!stack.isEmpty()) {
+		while(!stack.isEmpty()) {
             ngf[stack.pop()] = -1;
         }
 		
-		System.out.println(Arrays.toString(ngf));
+		for(int i = 0; i < size; i++) {
+			sb.append(ngf[i]).append(" ");
+		}
+		System.out.println(sb);
 	}
 }

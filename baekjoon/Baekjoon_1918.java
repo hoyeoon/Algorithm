@@ -24,19 +24,19 @@ public class Baekjoon_1918 {
 					op.pop();
 					break;
 				case '*': case '/':
-					if(op.isEmpty() || (!op.isEmpty() && op.peek() != '*' && op.peek() != '/'))
+					if(op.isEmpty() || (op.peek() != '*' && op.peek() != '/'))
 						op.push(arr[i]);
 					else {
-						while(!(op.isEmpty() || (!op.isEmpty() && op.peek() != '*' && op.peek() != '/'))) 
+						while(!(op.isEmpty() || (op.peek() != '*' && op.peek() != '/'))) 
 							sb.append(op.pop());
 						op.push(arr[i]);
 					}
 					break;
 				case '+': case '-':
-					if(op.isEmpty() || (!op.isEmpty() && op.peek() == '('))
+					if(op.isEmpty() || op.peek() == '(')
 						op.push(arr[i]);
 					else {
-						while(!(op.isEmpty() || (!op.isEmpty() && op.peek() == '(')))
+						while(!(op.isEmpty() || op.peek() == '('))
 							sb.append(op.pop());
 						op.push(arr[i]);
 					}
