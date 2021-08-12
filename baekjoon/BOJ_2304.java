@@ -25,12 +25,10 @@ public class BOJ_2304 {
 //		System.out.println(Arrays.deepToString(info));
 		
 		int maxHeight = info[0][1];
-		int maxLoc = 0;
 		int maxIdx = 0;
 		for(int i = 1; i < info.length; i++) {
 			if(maxHeight < info[i][1]) {
 				maxHeight = info[i][1];
-				maxLoc = info[i][0];
 				maxIdx = i;
 			}
 		}
