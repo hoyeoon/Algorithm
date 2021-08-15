@@ -2,64 +2,53 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_1260 {
+	static int[][] map;
+	static boolean[] visited;
+	static int N, M, V;
+	
 	public static void main(String[] args) throws Exception{
-		List<List<Integer>> graph = new ArrayList<>();
-		boolean[] visited;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		int V = Integer.parseInt(st.nextToken());
-		
-		for(int i = 0; i < N + 1; i++) {
-			List<Integer> list = new ArrayList<>();
-			graph.add(list);
-		}
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		V = Integer.parseInt(st.nextToken());
+		map = new int[N + 1][N + 1];
 		
 		for(int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			int from = Integer.parseInt(st.nextToken());
 			int to = Integer.parseInt(st.nextToken());
 			
-			graph.get(from).add(to);
-			graph.get(to).add(from);
+			map[from][to] = 1;
+			map[to][from] = 1;
 		}
-		System.out.println(graph);
-		
-		for(int i = 0; i < graph.size(); i++) {
-			Collections.sort(graph.get(i));
-		}
-		
-		System.out.println(graph);
-		
+//		System.out.println(Arrays.deepToString(map));
+
 		visited = new boolean[N + 1];
-		dfs(graph, V, visited);
+		dfs(V);
 		System.out.println();
 		visited = new boolean[N + 1];
-		bfs(graph, V, visited);
+		bfs(V);
 	}
 	
-	static void dfs(List<List<Integer>> graph, int v, boolean[] visited) {
+	static void dfs(int v) {
 		visited[v] = true;
 		System.out.print(v + " ");
-		for(int i : graph.get(v)) {
-			if(visited[i] == false) {
-				dfs(graph, i, visited);
+		
+		for(int i = 1; i <= N; i++) {
+			if(map[v][i] == 1 && visited[i] == false) {
+				dfs(i);
 			}
 		}
 	}
 	
-	static void bfs(List<List<Integer>> graph, int start, boolean[] visited) {
+	static void bfs(int start) {
 		Queue<Integer> queue = new LinkedList<Integer>();
 		queue.offer(start);
 		visited[start] = true;
@@ -68,8 +57,8 @@ public class BOJ_1260 {
 			int v = queue.poll();
 			System.out.print(v + " ");
 			
-			for(int i : graph.get(v)) {
-				if(visited[i] == false) {
+			for(int i = 1; i <= N; i++) {
+				if(map[v][i] == 1 && visited[i] == false) {
 					queue.offer(i);
 					visited[i] = true;
 				}
