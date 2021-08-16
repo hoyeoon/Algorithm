@@ -30,6 +30,9 @@ public class BOJ_2468 {
 			}
 		}
 		
+		// 문제 노트 : 아무 지역도 물에 잠기지 않을 수도 있다.
+		heights.add(0);
+		
 		for(int height : heights) {
 			// map 초기화
 			map = new int[n][n];
@@ -50,7 +53,8 @@ public class BOJ_2468 {
 			for(int i = 0; i < n; i++) {
 				for(int j = 0; j < n; j++) {
 					// cnt를 세기 위한 flag 변수 초기화
-					int flag = 0;
+					if(map[i][j] == 1) continue;
+					cnt++;
 					
 					// BFS
 					q = new LinkedList<>();
@@ -67,25 +71,17 @@ public class BOJ_2468 {
 							if(nx < 0 || nx >= n || ny < 0 || ny >= n || map[nx][ny] == 1) {
 								continue;
 							}				
-							if(map[nx][ny] == 0) {
-								// 이 부분이 실행된 것은 물에 잠기지 않는 부분이라는 뜻. flag를 1로 설정
-								flag = 1;
-								map[nx][ny] = 1;
-								q.offer(new int[]{nx, ny});
-							}
+							
+							// 이 부분이 실행된 것은 물에 잠기지 않는 부분이라는 뜻. flag를 1로 설정
+							map[nx][ny] = 1;
+							q.offer(new int[]{nx, ny});
 						}
 					}
-					// flag가 1로 되어있다면 cnt증가
-					if(flag == 1) cnt++;
 				}
 			}
 			// 최대 cnt 구하기
 			answer = Math.max(answer, cnt);
 		}
-		
-		// 문제 노트 : 아무 지역도 물에 잠기지 않을 수도 있다.
-		if(answer == 0) 
-			answer = 1;
 		System.out.println(answer);
 	}
 }
