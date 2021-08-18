@@ -2,6 +2,7 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -28,7 +29,7 @@ public class BOJ_1260 {
 			map[from][to] = 1;
 			map[to][from] = 1;
 		}
-//		System.out.println(Arrays.deepToString(map));
+		System.out.println(Arrays.deepToString(map));
 
 		visited = new boolean[N + 1];
 		dfs(V);
@@ -58,11 +59,12 @@ public class BOJ_1260 {
 			System.out.print(v + " ");
 			
 			for(int i = 1; i <= N; i++) {
-				if(map[v][i] == 1 && visited[i] == false) {
+				if(visited[i] == false && map[v][i] == 1) {
 					queue.offer(i);
 					visited[i] = true;
 				}
 			}
+			System.out.println(queue);
 		}
 	}
 }
