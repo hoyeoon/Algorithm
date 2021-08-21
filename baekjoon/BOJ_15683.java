@@ -3,7 +3,6 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -11,10 +10,9 @@ public class BOJ_15683 {
 	static int[] dx = {-1, 0, 1, 0};
 	static int[] dy = {0, 1, 0, -1};
 	static int[] rotateCnt = {0, 4, 2, 4, 4, 1};	// 회전 수 (1, 2, 3, 4, 5) idx를 1부터 사용하기 위해 0 추가
-	static int[] startIdx = {0, 0, 4, 6, 10, 14, 15};
+	
 	// 1~5번 돌아야하는 방향(dx, dy의 idx)
-	static int[][] D = {{0}, {1}, {2}, {3}, {0, 2}, {1, 3}, {0, 1}, {1, 2}, {2, 3}, {3, 0}, 
-			{0, 1, 2}, {1, 2, 3}, {2, 3, 0}, {3, 0, 1}, {0, 1, 2, 3}};
+	static int[][] D = {{}, {0}, {0, 2}, {0, 1}, {0, 1, 2}, {0, 1, 2, 3}};
 	
 	static List<int[]> cctv;
 	static int[][] map;
@@ -48,19 +46,18 @@ public class BOJ_15683 {
 		int x = cctv.get(cnt)[0];
 		int y = cctv.get(cnt)[1];
 		int n = map[x][y];
-		int start = startIdx[n];
-		for(int i = start; i < start + rotateCnt[n]; i++) {
+		
+		for(int i = 0; i < rotateCnt[n]; i++) {
 			int[][] copyMap = copyMap(map);
 			
-			for(int j = 0; j < D[i].length; j++) {
-				int nx = dx[D[i][j]];
-				int ny = dy[D[i][j]];
+			for(int j = 0; j < D[n].length; j++) {
+				int dir = (D[n][j] + i) % 4;
 				
 				int tempX = x;
 				int tempY = y;
 				while(true) {
-					tempX += nx;
-					tempY += ny;
+					tempX += dx[dir];
+					tempY += dy[dir];
 					
 					if(tempX < 0 || tempX >= N || tempY < 0 || tempY >= M || copyMap[tempX][tempY] == 6)
 						break;
@@ -71,8 +68,8 @@ public class BOJ_15683 {
 
 					copyMap[tempX][tempY] = 9;
 				}
-				recursive(cnt + 1, copyMap);
 			}
+			recursive(cnt + 1, copyMap);
 		}
 	}
 	
