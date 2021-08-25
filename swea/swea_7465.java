@@ -10,7 +10,7 @@ public class swea_7465 {
 	static int N, M;
 	static int[][] map;
 	static boolean[] visited;
-	static Queue<int[]> q = new LinkedList<>();
+	static Queue<Integer> q = new LinkedList<>();
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,21 +36,26 @@ public class swea_7465 {
 			}
 			
 			for(int i = 0; i < N; i++) {
+				if(visited[i] == true) continue;
+				if(visited[i] == false) cnt++;
+					
 				for(int j = 0; j < N; j++) {
-					if(visited[i] == false && map[i][j] == 1) {
+					if(map[i][j] == 1) {
 						visited[i] = true;
-						cnt++;
-						
-						q.offer(new int[] {i, j});
+						q.offer(j);
 						
 						while(!q.isEmpty()) {
-							int[] loc = q.poll();
+							int x = q.poll();
+							int flag = 0;
 							
 							for(int k = 0; k < N; k++) {
-								if(visited[loc[1]] == false && map[loc[1]][k] == 1) {
-									visited[loc[1]] = true;
-									q.offer(new int[] {loc[1], k});
+								if(visited[x] == false && map[x][k] == 1) {
+									flag = 1;
+									q.offer(k);
 								}
+							}
+							if(flag == 1) {
+								visited[x] = true;
 							}
 						}
 					}		
