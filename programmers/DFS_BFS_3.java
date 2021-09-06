@@ -15,7 +15,7 @@ class Solution {
     }
     
     public int solution(String begin, String target, String[] words) {
-        int answer = 0;
+    	int answer = 0;
         boolean isExist = Arrays.stream(words).anyMatch(target::equals);
         int N = words.length;
         
