@@ -14,17 +14,22 @@ public class BOJ_2331 {
 		List<Integer> list = new ArrayList<>();
 		int answer = 0;
 		
-		int[] A = Arrays.stream(st.nextToken().split("")).mapToInt(Integer::parseInt).toArray();
+		int A = Integer.parseInt(st.nextToken());
+		list.add(A);
+		int[] arr = Arrays.stream(Integer.toString(A).split("")).mapToInt(Integer::parseInt).toArray();
 		int P = Integer.parseInt(st.nextToken());
 		
 		while(true) {
-			int N = (int) Math.pow(A[0], 2) + (int) Math.pow(A[1], 2);
-			if(list.contains(N)) {
-				answer = list.size();
+			A = 0;
+			for(int i = 0; i < arr.length; i++) {
+				A += (int) Math.pow(arr[i], P);
+			}
+			if(list.contains(A)) {
+				answer = list.indexOf(A);
 				break;
 			}
-			
-			
+			list.add(A);
+			arr = Arrays.stream(Integer.toString(A).split("")).mapToInt(Integer::parseInt).toArray();
 		}
 		System.out.println(answer);
 	}
