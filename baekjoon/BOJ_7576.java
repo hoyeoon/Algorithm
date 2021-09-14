@@ -20,7 +20,7 @@ public class BOJ_7576 {
 		M = Integer.parseInt(st.nextToken());
 		N = Integer.parseInt(st.nextToken());
 		map = new int[N][M];
-		visited = new boolean[N][M];
+//		visited = new boolean[N][M];
 		q = new LinkedList<>();
 		int answer = 0;
 		
@@ -31,7 +31,7 @@ public class BOJ_7576 {
 				map[i][j] = value;
 				if(value == 1) {
 					q.offer(new int[] {i, j});
-					visited[i][j] = true;
+//					visited[i][j] = true;
 				}
 			}
 		}
@@ -45,7 +45,6 @@ public class BOJ_7576 {
 			int loc[] = q.poll();
 			int x = loc[0];
 			int y = loc[1];
-			answer++;
 			
 			for(int d = 0; d < 4; d++) {
 				int nx = x + dx[d];
@@ -54,9 +53,9 @@ public class BOJ_7576 {
 				if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
 				
 				if(map[nx][ny] == 0) {
-					
 					map[nx][ny] = 1;
-					visited[nx][ny] = true;
+					answer++;
+//					visited[nx][ny] = true;
 					q.offer(new int[] {nx, ny});
 				}
 			}
