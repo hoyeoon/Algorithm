@@ -3,6 +3,7 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,7 +15,7 @@ public class BOJ_2583 {
 	static Queue<int[]> q;
 	static int[] dx = {-1, 1, 0, 0};
 	static int[] dy = {0, 0, -1, 1};
-	static List<Integer> list = new ArrayList<>();
+	static List<Integer> counts = new ArrayList<>();
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -45,20 +46,24 @@ public class BOJ_2583 {
 			for(int j = 0; j < N; j++) {
 				if(map[i][j] == 0) {
 					answer++;
-					list.add(bfs(i, j));
+					counts.add(bfs(i, j));
 				}
 			}
 		}
-		
+		counts.sort(Comparator.naturalOrder());
 		System.out.println(answer);
+		for(int cnt : counts) {
+			System.out.print(cnt + " ");
+		}
 		
 	}
 	
 	private static int bfs(int i, int j) {
-		int cnt = 1;
+		int cnt = 0;
 		q.offer(new int[] {i, j});
 		
 		while(!q.isEmpty()) {
+			cnt++;
 			int[] loc = q.poll();
 			
 			for(int d = 0; d < 4; d++) {
@@ -67,7 +72,6 @@ public class BOJ_2583 {
 				
 				if(nx < 0 || nx >= M || ny < 0 || ny >= N || map[nx][ny] == 1) continue;
 				
-				cnt++;
 				map[nx][ny] = 1;
 				q.offer(new int[] {nx, ny});
 			}
