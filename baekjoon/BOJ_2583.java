@@ -20,7 +20,6 @@ public class BOJ_2583 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		StringBuilder sb = new StringBuilder();
 		M = Integer.parseInt(st.nextToken());
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
