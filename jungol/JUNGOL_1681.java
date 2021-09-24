@@ -2,39 +2,13 @@ package jungol;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
-
-class Info {
-	int node;
-	int depth;
-	int cost;
-	boolean[] visited;
-	String path;
-	
-	Info(int node, int depth, int cost, boolean[] visited, String path) {
-		super();
-		this.node = node;
-		this.depth = depth;
-		this.cost = cost;
-		this.visited = visited;
-		this.path = path;
-	}
-
-	@Override
-	public String toString() {
-		return "Info [node=" + node + ", depth=" + depth + ", cost=" + cost + ", visited=" + Arrays.toString(visited)
-				+ ", path=" + path + "]";
-	}
-}
 
 public class JUNGOL_1681 {
 	static int N, answer;
 	static int[][] map;
 	static boolean[] visited;
-	static Queue<Info> q;
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -49,37 +23,26 @@ public class JUNGOL_1681 {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		System.out.println(Arrays.deepToString(map));
-		
-		bfs();
+		visited[0] = true;
+		dfs(0, 1, 0);
 		System.out.println(answer);
 	}
-	private static void bfs() {
-		q = new LinkedList<>();	// int[]배열은 출발 node, depth, cost 비용이 들어 있음.
-		visited[0] = true;
-		q.offer(new Info(0, 1, 0, visited, "1"));
-		
-		while(!q.isEmpty()) {
-			Info info = q.poll();
-			int node = info.node;
-			int depth = info.depth;
-			int cost = info.cost;
-			boolean[] visited = info.visited;
-			String path = info.path;
+	
+	private static void dfs(int node, int depth, int sum) {
+		if(depth == N) {
+			if(map[node][0] != 0) {	// map[node][0] == 0 인 경우 1로 가는 방법이 없으므로 불가능
+				answer = Math.min(answer, sum + map[node][0]);
+			}
+			return;
+		}
+		for(int i = 0; i < N; i++) {
+			if(sum + map[node][i] >= answer) continue;	// 백트래킹
 			
-			if(depth == N) {
-				System.out.println(info);
-				answer = Math.min(answer, cost + map[node][0]);
-				continue;
+			if(!visited[i] && map[node][i] != 0) {
+				visited[i] = true;
+				dfs(i, depth + 1, sum + map[node][i]);
+				visited[i] = false;
 			}
-			for(int i = 0; i < N; i++) {
-				if(!visited[i] && map[node][i] != 0) {
-					visited[i] = true;
-					q.offer(new Info(i, depth + 1, cost + map[node][i], visited, path + (i + 1)));
-					visited[i] = false;
-				}
-			}
-			System.out.println(q);
 		}
 	}
 }
