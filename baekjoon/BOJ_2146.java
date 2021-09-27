@@ -2,7 +2,6 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -29,8 +28,7 @@ public class BOJ_2146 {
 			}
 		}
 		
-		System.out.println(Arrays.deepToString(map));
-		
+		// 육지를 구분하기 위한 부분
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < N; j++) {
 				if(map[i][j] == 1) {
@@ -39,8 +37,7 @@ public class BOJ_2146 {
 			}
 		}
 		
-		System.out.println(Arrays.deepToString(map));
-		
+		// 두 대륙을 연결할 수 있는 가장 짧은 다리의 길이를 구하는 부분
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < N; j++) {
 				if(map[i][j] != 0) {
@@ -53,6 +50,8 @@ public class BOJ_2146 {
 	}
 
 	private static void connectLand(int i, int j, int cnt) {
+		if(cnt >= minBridge) return;
+		
 		int curr = map[i][j];
 		
 		for(int d = 0; d < 4; d++) {
@@ -65,6 +64,8 @@ public class BOJ_2146 {
 				minBridge = Math.min(minBridge, cnt);
 				return;
 			}
+			
+			if(cnt + 1 >= minBridge) return;
 			
 			map[nx][ny] = curr;
 			connectLand(nx, ny, cnt + 1);
