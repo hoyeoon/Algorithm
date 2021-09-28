@@ -2,7 +2,6 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class BOJ_10971 {
@@ -25,29 +24,25 @@ public class BOJ_10971 {
 			}
 		}
 		
-		System.out.println(Arrays.deepToString(map));
-		
 		visited[0] = true;
-		dfs(0, 0, 0);
+		dfs(0, 0, 1);	// 첫번째 노드에서 시작
 		System.out.println(minCost);
 	}
 
 	private static void dfs(int node, int cost, int cnt) {
-		if(minCost <= cost) return;
-		
 		if(cnt == N) {
-			if(minCost > cost) {
-				minCost = cost;
+			if(map[node][0] != 0) {	// 첫번째 노드로 가는 경로가 있을 경우
+				minCost = Math.min(minCost, cost + map[node][0]);
 			}
 			return;
 		}
 		
+		if(minCost <= cost) return;	// 백트래킹
+		
 		for(int i = 0; i < N; i++) {
-			if(!visited[i]) {
+			if(!visited[i] && map[node][i] != 0) {
 				visited[i] = true;
-				
 				dfs(i, cost + map[node][i], cnt + 1);
-				
 				visited[i] = false;
 			}
 		} 
