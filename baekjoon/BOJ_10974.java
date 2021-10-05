@@ -1,6 +1,5 @@
 package baekjoon;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class BOJ_10974 {
@@ -13,9 +12,12 @@ public class BOJ_10974 {
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
 		R = N;
-		input = new int[R];
+		input = new int[N];
+		for(int i = 1; i <= N; i++) {
+			input[i - 1] = i;
+		}
 		visited = new boolean[N];
-		numbers = new int[N];
+		numbers = new int[R];
 		
 		permutation(0);
 		sc.close();
@@ -23,16 +25,19 @@ public class BOJ_10974 {
 
 	private static void permutation(int cnt) {
 		if(cnt == R) {
-			System.out.println(Arrays.toString(input));
+			for(int i : numbers) {
+				System.out.print(i + " ");
+			}
+			System.out.println();
 			return;
 		}
 		
 		for(int i = 0; i < N; i++) {
 			if(!visited[i]) {
-				visited[cnt] = true;
+				visited[i] = true;
 				numbers[cnt] = input[i]; 
 				permutation(cnt + 1);
-				visited[cnt] =false;
+				visited[i] = false;
 			}
 		}	
 	}
