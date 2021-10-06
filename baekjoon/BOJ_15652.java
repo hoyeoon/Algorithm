@@ -2,10 +2,10 @@ package baekjoon;
 
 import java.util.Scanner;
 
-public class BOJ_15650 {
-	static int[] numbers;
-	static int[] input;
+public class BOJ_15652 {
 	static int N, R;
+	static int[] input;
+	static int[] numbers;
 	static StringBuilder sb;
 	
 	public static void main(String[] args) {
@@ -13,20 +13,18 @@ public class BOJ_15650 {
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
 		R = sc.nextInt();
-		
 		input = new int[N];
 		numbers = new int[R];
 		
 		for(int i = 0; i < N; i++) {
 			input[i] = i + 1;
 		}
-		
-		comb(0, 0);
+		combination(0, 0);
 		System.out.println(sb);
 		sc.close();
 	}
 
-	private static void comb(int cnt, int start) {
+	private static void combination(int cnt, int start) {
 		if(cnt == R) {
 			for(int number : numbers) {
 				sb.append(number).append(" ");
@@ -37,7 +35,7 @@ public class BOJ_15650 {
 		
 		for(int i = start; i < N; i++) {
 			numbers[cnt] = input[i];
-			comb(cnt + 1, i + 1);
+			combination(cnt + 1, i);
 		}
 	}
 }

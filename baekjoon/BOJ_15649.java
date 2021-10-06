@@ -2,10 +2,11 @@ package baekjoon;
 
 import java.util.Scanner;
 
-public class BOJ_15650 {
-	static int[] numbers;
-	static int[] input;
+public class BOJ_15649 {
 	static int N, R;
+	static int[] input;
+	static int[] numbers;
+	static boolean[] visited;
 	static StringBuilder sb;
 	
 	public static void main(String[] args) {
@@ -13,20 +14,19 @@ public class BOJ_15650 {
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
 		R = sc.nextInt();
-		
 		input = new int[N];
+		visited = new boolean[N];
 		numbers = new int[R];
 		
 		for(int i = 0; i < N; i++) {
 			input[i] = i + 1;
 		}
-		
-		comb(0, 0);
+		permutation(0);
 		System.out.println(sb);
 		sc.close();
 	}
 
-	private static void comb(int cnt, int start) {
+	private static void permutation(int cnt) {
 		if(cnt == R) {
 			for(int number : numbers) {
 				sb.append(number).append(" ");
@@ -35,9 +35,13 @@ public class BOJ_15650 {
 			return;
 		}
 		
-		for(int i = start; i < N; i++) {
-			numbers[cnt] = input[i];
-			comb(cnt + 1, i + 1);
+		for(int i = 0; i < N; i++) {
+			if(!visited[i]) {
+				visited[i] = true;
+				numbers[cnt] = input[i];
+				permutation(cnt + 1);
+				visited[i] = false;
+			}
 		}
 	}
 }
