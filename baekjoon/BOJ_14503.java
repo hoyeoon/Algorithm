@@ -35,9 +35,7 @@ public class BOJ_14503 {
 		
 		map[r][c] = 1;
 		
-		for(int d = 0; d < 4; d++) {
-			
-		}
+		
 		
 		while(true) {
 			
