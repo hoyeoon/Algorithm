@@ -24,5 +24,6 @@ public class BOJ_2636 {
 		}
 		
 		
+		
 	}
 }
