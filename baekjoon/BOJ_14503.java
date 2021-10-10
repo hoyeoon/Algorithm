@@ -5,15 +5,14 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+// 복습 필요
 public class BOJ_14503 {
 	// 북, 동, 남, 서
 	static int[] dr = {-1, 0, 1, 0};
 	static int[] dc = {0, 1, 0, -1};
 	static int N, M, r, c, d;
 	static int[][] map;
-	static int answer = 0;
 	static int cnt = 0;
-	static int flag = 1;
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,44 +32,46 @@ public class BOJ_14503 {
 				map[i][j] = Integer.parseInt(st.nextToken()); 
 			}
 		}
-		System.out.println(Arrays.deepToString(map));
-		
-		while(true) {
-			int check = 0;
-			for(int d = 0; d < 4; d++) {
-				if(map[r + dr[d]][c + dc[d]] == 0) {
-					check = 1;
-					break;
-				}
-			}
-			// 네 방향 모두 청소가 이미 되어있거나 벽인 경우
-			if(check == 0) {
-				
-				
-				
-			}
-			
-			if(flag == 1) map[r][c] = 1;
-			d = (d + 3) % 4;
-			
-			int nr = r + dr[d];
-			int nc = c + dc[d];
-			
-			if(nr < 0 || nr >= N || nc < 0 || nc >= M) continue;
-			
-			if(map[nr][nc] == 0) {
-				r = nr;
-				c = nc;
-				flag = 1;
-				continue;
-			} else if(map[nr][nc] == 1) {
-				r = nr;
-				c = nc;
-				flag = 2;
-			}
-			
-			
-			
-		}
+		clean(r, c, d);
+		System.out.println(cnt);
 	}
+	
+    public static void clean(int row, int col, int direction) {
+        // 1. 현재 위치를 청소한다.
+        if (map[row][col] == 0) {
+            map[row][col] = 2;
+            cnt++;
+        }
+
+        // 2. 왼쪽방향부터 차례대로 탐색을 진행한다.
+        boolean flag = false;
+        int origin = direction;
+        for (int i = 0; i < 4; i++) {
+            int next_d = (direction + 3) % 4;
+            int next_r = row + dr[next_d];
+            int next_c = col + dc[next_d];
+
+            if (next_r > 0 && next_c > 0 && next_r < N && next_c < M) {
+                if (map[next_r][next_c] == 0) {   // 아직 청소하지 않은 공간이라면
+                    clean(next_r, next_c, next_d);
+                    flag = true;
+                    break;
+                }
+            }
+            direction = (direction + 3) % 4;
+        }
+
+        // 네 방향 모두 청소가 되어있거나 벽인 경우
+        if (!flag) {
+            int next_d = (origin + 2) % 4;
+            int next_br = row + dr[next_d];
+            int next_bc = col + dc[next_d];
+
+            if (next_br > 0 && next_bc > 0 && next_br < N && next_bc < M) {
+                if (map[next_br][next_bc] != 1) {
+                    clean(next_br, next_bc, origin); // 바라보는 방향 유지한 채 후진
+                }
+            }
+        }
+    }
 }
