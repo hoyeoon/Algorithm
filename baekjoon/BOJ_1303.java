@@ -17,8 +17,8 @@ public class BOJ_1303 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
 		map = new char[N][M];
 		visited = new boolean[N][M];
 		
