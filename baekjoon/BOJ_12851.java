@@ -8,8 +8,9 @@ import java.util.StringTokenizer;
 
 public class BOJ_12851 {
 	static int minTime = Integer.MAX_VALUE;	// 수빈이가 동생을 찾는 가장 빠른 시간
-	static int minTimeCase = 0; 			// 가장 빠른 시간으로 수빈이가 동생을 찾는 방법의 수
+	static int minTimeCase = 1; 			// 가장 빠른 시간으로 수빈이가 동생을 찾는 방법의 수
 	static int N, K;
+	static boolean[] visited = new boolean[100001];
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,18 +31,26 @@ public class BOJ_12851 {
 			int x = info[0];
 			int time = info[1];
 			
-			if(x > K + 1) continue;	// 백트래킹
+			if(time > minTime) continue;
+			if(x < 0 || x > 100000) continue;
 			
 			if(x == K) {
-				if(minTime > time) {
-					minTime = time; 
+				if(minTime == time) {
+					minTimeCase++;
 				}
-				continue;
+				
+				if(minTime > time) {
+					minTime = time;
+					minTimeCase = 1;
+				}
 			}
 			
-			q.offer(new int[] {x - 1, time + 1});
-			q.offer(new int[] {x + 1, time + 1});
-			q.offer(new int[] {x * 2, time + 1});
+			if(!visited[x]) {
+				q.offer(new int[] {x - 1, time + 1});
+				q.offer(new int[] {x + 1, time + 1});
+				q.offer(new int[] {x * 2, time + 1});
+			}
+			visited[x] = true;
 		}
 	}
 }
