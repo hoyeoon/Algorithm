@@ -1,78 +1,45 @@
 package baekjoon;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class BOJ_12851 {
-	static int minTime = Integer.MAX_VALUE;	// 수빈이가 동생을 찾는 가장 빠른 시간
-	static int minTimeCase = 0; 			// 가장 빠른 시간으로 수빈이가 동생을 찾는 방법의 수
-	static int N, K;
-	static boolean[] visited;
+	static boolean visited[] = new boolean[101];
+	static int N, K, min_sec = Integer.MAX_VALUE, cnt = 0;
 	
 	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		N = Integer.parseInt(st.nextToken());	// 수빈 위치
-		K = Integer.parseInt(st.nextToken());	// 동생 위치
-		bfs1();
-		bfs2();
-		System.out.println(minTime);
-		System.out.println(minTimeCase);
-	}
-
-	private static void bfs2() {
-		visited = new boolean[100001];
-		Queue<int[]> q = new LinkedList<>();	// 수빈의 위치(x), 시간(time)을 담는 queue 자료형
-		q.offer(new int[] {N, 0});
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		K = sc.nextInt();
+		sc.close();
 		
-		while(!q.isEmpty()) {
-			int[] info = q.poll();
-			int x = info[0];
-			int time = info[1];
-			
-			
-			if(time > minTime) continue;
-			if(x < 0 || x > 100000) continue;
-			
-			if(x == K && time == minTime) {
-				minTimeCase++;
-			}
-			
-			if(!visited[x]) {
-				q.offer(new int[] {x - 1, time + 1});
-				q.offer(new int[] {x + 1, time + 1});
-				q.offer(new int[] {x * 2, time + 1});
-			}
-			visited[x] = true;
-		}
-	}
-
-	private static void bfs1() {
-		visited = new boolean[100001];
-		Queue<int[]> q = new LinkedList<>();	// 수빈의 위치(x), 시간(time)을 담는 queue 자료형
-		q.offer(new int[] {N, 0});
+		dfs(0, N);
 		
-		while(!q.isEmpty()) {
-			int[] info = q.poll();
-			int x = info[0];
-			int time = info[1];
-			
-			if(time >= minTime) continue;
-			if(x < 0 || x > 100000) continue;
-			
-			if(x == K) {
-				minTime = Math.min(minTime, time);
+		System.out.println(min_sec);
+		System.out.println(cnt);
+		
+		System.out.println(Arrays.toString(visited));
+	}
+	
+	private static void dfs(int sec, int X) {
+		System.out.print(X);
+		if(X > 100 || X < 0) return;
+		
+		if(X == K) {
+			if(sec < min_sec) {
+				min_sec = sec;
+				cnt = 1;
+			} else if(sec == min_sec) {
+				cnt++;
 			}
-			
-			if(!visited[x]) {
-				q.offer(new int[] {x - 1, time + 1});
-				q.offer(new int[] {x + 1, time + 1});
-				q.offer(new int[] {x * 2, time + 1});
-			}
-			visited[x] = true;
+			return;
 		}
+		
+		visited[X] = true;
+		
+		if(!visited[X + 1]) dfs(sec + 1, X + 1);
+		if(!visited[X - 1]) dfs(sec + 1, X - 1);
+		if(!visited[X * 2])	dfs(sec + 1, X * 2);
+		
 	}
 }
