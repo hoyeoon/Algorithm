@@ -27,22 +27,24 @@ public class 다익스트라 {
     }
 
     static int[] dist;
-    static List<List<Node>> list = new ArrayList<>();
+    static List<List<Node>> list;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int v = Integer.parseInt(st.nextToken());
         int e = Integer.parseInt(st.nextToken());
-        dist = new int[v + 1];
 
         st = new StringTokenizer(br.readLine());
         int startIdx = Integer.parseInt(st.nextToken());
 
+        list = new ArrayList<>();
         for(int i = 0; i <= v; i++){
             list.add(new ArrayList<Node>());
-            dist[i] = Integer.MAX_VALUE;
         }
+
+        dist = new int[v + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
         for(int i = 0; i < e; i++){
             st = new StringTokenizer(br.readLine(), " ");
@@ -50,24 +52,23 @@ public class 다익스트라 {
             int end = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
             list.get(start).add(new Node(end, cost));
+            list.get(end).add(new Node(start, cost)); // 무향그래프일 경우 추가
         }
 
-        dist[startIdx] = 0;
         dijstra(startIdx);
 
         System.out.println(Arrays.toString(dist));
     }
 
     private static void dijstra(int startIdx) {
-
         Queue<Node> q = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
-
         q.offer(new Node(startIdx , 0));
+        dist[startIdx] = 0;
 
         while(!q.isEmpty()){
             Node currNode = q.poll();
 
-            if(currNode.cost > dist[currNode.idx]){
+            if(dist[currNode.idx] < currNode.cost){
                 continue;
             }
 
