@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-public class Baekjoon_17299_시간초과 {
-	private static int NGF[];
-	private static int A[];
-	private static int F[] = new int[10];
+public class BOJ_17299_시간초과 {
+	private static int[] NGF;
+	private static int[] A;
+	private static int[] F = new int[10];
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

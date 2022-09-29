@@ -3,7 +3,7 @@ package baekjoon;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Baekjoon_1918 {
+public class BOJ_1918 {
 	public static void main(String[] args) {
 		StringBuilder sb = new StringBuilder();
 		Scanner sc = new Scanner(System.in);

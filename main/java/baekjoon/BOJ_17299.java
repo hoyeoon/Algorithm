@@ -5,10 +5,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Stack;
 
-public class Baekjoon_17299 {
-	private static int ngf[];	// 오등큰수
-	private static int arr[]; 	// 수열
-	private static int count[] = new int[1000001];	// count[i]가 수열 A에서 등장한 횟수
+public class BOJ_17299 {
+	private static int[] ngf;	// 오등큰수
+	private static int[] arr; 	// 수열
+	private static int[] count = new int[1000001];	// count[i]가 수열 A에서 등장한 횟수
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

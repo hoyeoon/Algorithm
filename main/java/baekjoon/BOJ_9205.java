@@ -2,48 +2,81 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_9205 {
+	static class Point {
+		int x;
+		int y;
+
+		Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 		StringTokenizer st;
-		
-		int T = Integer.parseInt(br.readLine());
-		while(T-- > 0) {
-			int n = Integer.parseInt(br.readLine());
-			int flag = 0;	// 0 이면 happy, 1이면 sad
-			st = new StringTokenizer(br.readLine(), " ");	// 상근이네 집
-			int[] loc1 = {Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())};
-			int[] loc2;
-			for(int i = 1; i < n + 1; i++) {
-				st = new StringTokenizer(br.readLine(), " ");	//	편의점
-				loc2 = new int[] {Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())};
-				if(calDist(loc1, loc2) > 1000) {
-					flag = 1;
-				}
-				loc1 = loc2;
+		StringBuffer sb = new StringBuffer();
+		int t = Integer.parseInt(br.readLine());
+
+		while(t-- > 0){
+			int n = Integer.parseInt(br.readLine());	// 편의점 수
+			st = new StringTokenizer(br.readLine(), " ");
+
+			Point startPoint = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+			List<Point> conveinientList = new ArrayList<>();
+			for(int i = 0; i < n; i++){
+				st = new StringTokenizer(br.readLine(), " ");
+				conveinientList.add(new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 			}
-			st = new StringTokenizer(br.readLine(), " ");	// 펜타포트 락 페스티벌
-			loc2 = new int[] {Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())};
-			
-			if(calDist(loc1, loc2) > 1000) {
-				flag = 1;
-			}
-			
-			if(flag == 1) {
-				sb.append("sad");
-			}
-			else {
-				sb.append("happy");
-			}
-			sb.append("\n");
+
+			st = new StringTokenizer(br.readLine(), " ");
+			Point endPoint = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+			String result = bfs(n, startPoint, conveinientList, endPoint) ? "happy" : "sad";
+			sb.append(result).append("\n");
 		}
+		sb.setLength(sb.length() - 1);
+		br.close();
+
 		System.out.println(sb);
 	}
-	
-	private static int calDist(int[] loc1, int[] loc2) {
-		return Math.abs(loc1[0] - loc2[0]) + Math.abs(loc1[1] - loc2[1]);
+
+	private static boolean bfs(int n, Point startPoint, List<Point> conveinientList, Point endPoint) {
+
+		boolean[] visited = new boolean[n];
+		Queue<Point> q = new LinkedList<>();
+
+		q.add(startPoint);
+
+		while(!q.isEmpty()){
+			Point point = q.poll();
+
+			if(getDistance(point, endPoint) <= 1000) {
+				return true;
+			}
+
+			for(int i = 0; i < n; i++) {
+				if(!visited[i]) {
+					if(getDistance(point, conveinientList.get(i)) <= 1000){
+						visited[i] = true;
+						q.offer(conveinientList.get(i));
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static int getDistance(Point point1, Point point2) {
+		return Math.abs(point1.x - point2.x) + Math.abs(point1.y - point2.y);
 	}
 }

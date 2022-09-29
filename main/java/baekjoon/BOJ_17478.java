@@ -2,7 +2,7 @@ package baekjoon;
 
 import java.util.Scanner;
 
-public class Baekjoon_17478 {
+public class BOJ_17478 {
 	private static String underBar = "";
 	private static String[] arr;
 	private static void recursive(int i) {

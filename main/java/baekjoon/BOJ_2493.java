@@ -5,14 +5,14 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class Baekjoon_2493 {
+public class BOJ_2493 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		StringBuilder sb = new StringBuilder();
 		int n = Integer.parseInt(st.nextToken());
-		int arr[] = new int[n];
-		int answer[] = new int[n];
+		int[] arr = new int[n];
+		int[] answer = new int[n];
 		Stack<Integer> stack = new Stack<>();
 		
 		st = new StringTokenizer(br.readLine(), " ");
